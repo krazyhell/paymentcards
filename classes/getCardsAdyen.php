@@ -133,11 +133,17 @@ class getCardsAdyen extends getCards {
         
         // Parcours de chaque ligne du tableau
         foreach ($rows as $row) {
+            
             // Récupération de toutes les cellules de la ligne
-            $cells = $xpath->query('.//td', $row);
+            $cells = [];
+            foreach ($row->childNodes as $child) {
+                if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'td') {
+                    $cells[] = $child;
+                }
+            }
             
             // Vérification qu'il y a au moins 3 cellules (numéro, marque, expiration minimum)
-            if ($cells->length >= 3) {
+            if (count($cells) >= 3) {
                 // Extraction des données de carte depuis cette ligne
                 $cardData = $this->extractCardDataFromRow($cells);
                 
