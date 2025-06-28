@@ -574,10 +574,9 @@ class getCardsAdyen extends getCards {
      */
     public function getTotalCount() {
         $count = 0;
-        // Sommation du nombre de cartes dans chaque catégorie
-        foreach ($this->cards as $cardList) {
-            $count += count($cardList);
-        }
+        // Somme du nombre de cartes dans chaque catégorie
+        $count = array_sum(array_map('count', $this->cards));
+
         return $count;
     }
     
